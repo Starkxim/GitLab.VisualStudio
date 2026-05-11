@@ -361,7 +361,7 @@ namespace GitLab.VisualStudio
             {
                 if (git.IsDiscoveredGitRepository)
                 {
-                    var blob=Regex.Match(url, "/blob/(?<treeish>[^/]*)/");
+                    var blob=Regex.Match(url, "/(?:-/)?blob/(?<treeish>[^/]*)/");
                     if (blob.Success)
                     {
                         string p1 = uri.GetComponents(UriComponents.Path, UriFormat.UriEscaped).ToString();

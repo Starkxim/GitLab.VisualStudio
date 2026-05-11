@@ -25,7 +25,7 @@ namespace GitLab.VisualStudio.Shared.Models
                     Id = p.Id,
                     WebUrl = p.WebUrl,
                     Description = p.Description,
-                    Namespace = p.Namespace.FullPath                    
+                    Namespace = p.Namespace?.FullPath ?? string.Empty
                 };
             }
             else

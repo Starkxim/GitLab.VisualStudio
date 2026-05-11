@@ -9,7 +9,6 @@ using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
@@ -107,41 +106,47 @@ namespace GitLab.VisualStudio.Services
 
         public User Login(bool enable2fa, string host, string email, string password, ApiVersion apiVersion)
         {
-            NGitLab.GitLabClient client = null;
-            User user = null;
-            NGitLab.Impl.ApiVersion _apiVersion = VsApiVersionToNgitLabversion(apiVersion);
+            var ngitlabApiVersion = VsApiVersionToNgitLabversion(apiVersion);
+            var loginAttempts = new List<Func<NGitLab.GitLabClient>>();
             if (enable2fa)
             {
-                client = NGitLab.GitLabClient.Connect(host, password, _apiVersion);
+                loginAttempts.Add(() => NGitLab.GitLabClient.Connect(host, password, ngitlabApiVersion));
             }
             else
             {
-                client = NGitLab.GitLabClient.Connect(host, email, password, _apiVersion);
+                loginAttempts.Add(() => NGitLab.GitLabClient.Connect(host, email, password, ngitlabApiVersion));
+                loginAttempts.Add(() => NGitLab.GitLabClient.Connect(host, password, ngitlabApiVersion));
             }
-            try
+
+            Exception lastException = null;
+            foreach (var login in loginAttempts)
             {
-                user = client.Users.Current();
-                user.PrivateToken = client.ApiToken;
-                user.ApiVersion = apiVersion;
-                user.Host = host;
-                if (user != null && user.Id > 0)
+                try
                 {
-                    _storage.SaveUser(user, password);
-                    LoadProjects();
+                    var client = login();
+                    var user = client.Users.Current();
+                    user.PrivateToken = client.ApiToken;
+                    user.ApiVersion = apiVersion;
+                    user.Host = host;
+                    if (user.Id > 0)
+                    {
+                        _storage.SaveUser(user, password);
+                        LoadProjects();
+                        return user;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    lastException = ex;
                 }
             }
-            catch (WebException ex)
-            {
-                var res = (HttpWebResponse)ex.Response;
-                var statusCode = (int)res.StatusCode;
 
-                throw ex;
-            }
-            catch (Exception ex1)
+            if (lastException != null)
             {
-                throw ex1;
+                throw lastException;
             }
-            return user;
+
+            return null;
         }
 
         private static NGitLab.Impl.ApiVersion VsApiVersionToNgitLabversion(ApiVersion apiVersion)
@@ -196,22 +201,17 @@ namespace GitLab.VisualStudio.Services
                     vl_temp = NGitLab.Models.VisibilityLevel.Private;
                 }
                 var client = GetClient();
-                var pjt = client.Projects.Create(
-                    new NGitLab.Models.ProjectCreate()
-                    {
-                        Description = description,
-                        Name = name,
-                        VisibilityLevel = vl_temp,
-                        IssuesEnabled = true,
-                        ContainerRegistryEnabled = true,
-                        JobsEnabled = true,
-                        LfsEnabled = true,
-                        SnippetsEnabled = true,
-                        WikiEnabled = true,
-                        MergeRequestsEnabled = true
-                            ,
-                        NamespaceId = namespaceid
-                    });
+                var request = new NGitLab.Models.ProjectCreate()
+                {
+                    Description = description,
+                    Name = name,
+                    VisibilityLevel = vl_temp
+                };
+                if (namespaceid > 0)
+                {
+                    request.NamespaceId = namespaceid;
+                }
+                var pjt = client.Projects.Create(request);
                 result.Project = pjt;
             }
             catch (Exception ex)

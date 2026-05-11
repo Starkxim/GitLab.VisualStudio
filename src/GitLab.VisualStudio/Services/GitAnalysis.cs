@@ -119,7 +119,7 @@ namespace GitLab.VisualStudio.Services
             {
                 urlshowkind = "commits";
             }
-            var fileUrl = string.Format("{0}/{4}/{1}/{2}{3}", urlRoot.Trim('/'), WebUtility.UrlEncode(repositoryTarget.Trim('/')), fileIndexPath.Trim('/'), fragment, urlshowkind);
+            var fileUrl = string.Format("{0}/-/{4}/{1}/{2}{3}", urlRoot.Trim('/'), WebUtility.UrlEncode(repositoryTarget.Trim('/')), fileIndexPath.Trim('/'), fragment, urlshowkind);
 
             return fileUrl;
         }
@@ -136,7 +136,7 @@ namespace GitLab.VisualStudio.Services
                   : originUrl.Value;
 
                 // git@GitLab.com:user/repo -> http://GitLab.com/user/repo
-                urlRoot = Regex.Replace(urlRoot, "^git@(.+):(.+)/(.+)$", match => "http://" + string.Join("/", match.Groups.OfType<Group>().Skip(1).Select(group => group.Value)), RegexOptions.IgnoreCase);
+                urlRoot = Regex.Replace(urlRoot, "^git@(.+):(.+)/(.+)$", match => "https://" + string.Join("/", match.Groups.OfType<Group>().Skip(1).Select(group => group.Value)), RegexOptions.IgnoreCase);
 
                 // https://user@GitLab.com/user/repo -> https://GitLab.com/user/repo
                 urlRoot = Regex.Replace(urlRoot, "(?<=^https?://)([^@/]+)@", "");
