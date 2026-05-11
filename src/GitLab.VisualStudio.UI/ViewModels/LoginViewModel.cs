@@ -218,6 +218,10 @@ namespace GitLab.VisualStudio.UI.ViewModels
                         }
                     }
                 }
+                else
+                {
+                    logmsg = "Invalid API version selection.";
+                }
             }).ContinueWith(task =>
             {
                 IsBusy = false;

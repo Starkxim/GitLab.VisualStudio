@@ -128,7 +128,7 @@ namespace GitLab.VisualStudio.Services
                     user.PrivateToken = client.ApiToken;
                     user.ApiVersion = apiVersion;
                     user.Host = host;
-                    if (user != null && user.Id > 0)
+                    if (user.Id > 0)
                     {
                         _storage.SaveUser(user, password);
                         LoadProjects();
