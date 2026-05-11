@@ -139,9 +139,6 @@
     <Resource Include="Resources\images\host.png" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="EmbedIO">
-      <Version>3.4.3</Version>
-    </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.SDK">
       <Version>17.1.32210.191</Version>
     </PackageReference>

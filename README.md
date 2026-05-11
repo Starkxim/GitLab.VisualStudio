@@ -2,13 +2,15 @@
 
 You can log any of your favorite GitLab servers and start your great job!
 
-The GitLab Extension for Visual Studio provides GitLab integration in Visual Studio 2015/2017.
+The GitLab Extension for Visual Studio provides GitLab integration in Visual Studio.
 Most of the extension UI lives in the Team Explorer pane, which is available from the View menu.
 
 Appveyor:[![Build status](https://ci.appveyor.com/api/projects/status/qb510idi1wca2vet/branch/master?svg=true)](https://ci.appveyor.com/project/MaiKeBing/gitlab-visualstudio/branch/master)
 
 The Visual Studio Extension is also available at the [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=MysticBoy.GitLabExtensionforVisualStudio), or by searching for GitLab4VS  in the Visual Studio extension manager.
 The latest build of the Visual Studio Extension is available at the [Open VsixGallery](http://vsixgallery.com/extension/54803a44-49e0-4935-bba4-7d7d91682273/)
+
+Current VSIX targets Visual Studio 2022+ (17.x/18.x range) with x64 architecture.
 
 [![Join the chat at https://gitter.im/GitLab-VisualStudio/](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/GitLab-VisualStudio?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
@@ -32,6 +34,18 @@ For older versions of Gitlab
 
 ***by Brett Winters***
 
+
+### Recommended login for modern GitLab (GitLab 16/17+)
+
+GitLab newer versions generally require Personal Access Token (PAT) usage for API access.
+
+1) In GitLab, [top right] go to Settings then Access Tokens (left menu)
+2) Enter a name & expire time (optional).
+3) Check off "api" as the scope.
+4) Click "Create Personal Access Token".
+5) In Visual Studio, click "Connect" beside GitLab.
+6) Enter your GitLab Username and paste PAT in the password field.
+7) Select "AutoDiscovery" (recommended) or "API v4".
 
 ### When you login with  2FA :
 
