@@ -42,20 +42,21 @@ jobs:
         run: |
           $path = "src/GitLab.VisualStudio.UI/Properties/GitApp.cs"
           if (-not (Test-Path $path)) {
-            @'
-namespace GitLab.VisualStudio.UI.Properties
-{
-    // Placeholder generated for CI build validation only.
-    // The real GitApp.cs (which holds the GitLab OAuth application credentials) is
-    // git-ignored and must be supplied locally by developers. The client_id below is
-    // the same public PKCE client id already present in LoginViewModel.cs.
-    internal static class GitApp
-    {
-        public const string client_id = "60e86660b759079b66f429f506166fe1cd8cd5fd350476b06801ea973e46ac93";
-        public const string client_secret = "ci-placeholder-secret";
-    }
-}
-'@ | Out-File -FilePath $path -Encoding utf8
+            $lines = @(
+              'namespace GitLab.VisualStudio.UI.Properties',
+              '{',
+              '    // Placeholder generated for CI build validation only.',
+              '    // The real GitApp.cs (GitLab OAuth credentials) is git-ignored and',
+              '    // must be supplied locally by developers. The client_id below is the',
+              '    // same public PKCE client id already present in LoginViewModel.cs.',
+              '    internal static class GitApp',
+              '    {',
+              '        public const string client_id = "60e86660b759079b66f429f506166fe1cd8cd5fd350476b06801ea973e46ac93";',
+              '        public const string client_secret = "ci-placeholder-secret";',
+              '    }',
+              '}'
+            )
+            Set-Content -Path $path -Value $lines -Encoding utf8
             Write-Host "Created placeholder $path"
           } else {
             Write-Host "$path already exists; leaving it untouched"
