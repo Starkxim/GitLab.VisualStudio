@@ -43,6 +43,29 @@ nuget restore GitLabVS.sln
 msbuild GitLabVS.sln /p:Configuration=Release /p:DeployExtension=false /v:m
 ```
 
+## Required local file: `GitApp.cs` (OAuth credentials)
+
+`src/GitLab.VisualStudio.UI/Properties/GitApp.cs` holds the GitLab OAuth application
+credentials and is intentionally **git-ignored** (see `.gitignore`). A clean checkout
+therefore does not contain it, and the build fails with
+`CS2001: Source file '...\Properties\GitApp.cs' could not be found` until you create it.
+
+Create the file locally with this shape:
+
+```csharp
+namespace GitLab.VisualStudio.UI.Properties
+{
+    internal static class GitApp
+    {
+        public const string client_id = "<your GitLab OAuth application id>";
+        public const string client_secret = "<your GitLab OAuth application secret>";
+    }
+}
+```
+
+The CI workflow (`.github/workflows/build.yml`) generates a placeholder version of this
+file automatically so it can validate compilation without access to real credentials.
+
 ## Notes for the VS2026 upgrade
 
 - `Microsoft.VisualStudio.SDK` / `Microsoft.VSSDK.BuildTools` are on the **17.14** line.
