@@ -12,6 +12,14 @@ download in the
 These are the changes to each version that has been released
 on the official Visual Studio extension gallery.
 
+## V1.3.0
+
+- Visual Studio 2026 (18.x) support; installs on Visual Studio 2022 and 2026.
+- VSIX install targets updated to `[17.0,19.0)`; architectures switched to amd64 + arm64 (x86 removed).
+- Visual Studio SDK / VSSDK Build Tools upgraded to 17.14; Newtonsoft.Json 13.0.3, Microsoft.Xaml.Behaviors.Wpf 1.1.142, EmbedIO 3.5.2.
+- Team Explorer assemblies resolved from the building VS instance (`$(VsInstallRoot)`) instead of a hard-coded VS2022 path.
+- Fixed Newtonsoft.Json binding redirect (was pointing to 12.0.0.0).
+
 ## V1.0.183
 
  - Fix for " cannot connect to custom gitlab server with different port #50"

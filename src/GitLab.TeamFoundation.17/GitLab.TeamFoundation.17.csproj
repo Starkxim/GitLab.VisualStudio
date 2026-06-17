@@ -18,6 +18,16 @@
     </NuGetPackageImportStamp>
     <TargetFrameworkProfile />
   </PropertyGroup>
+  <!--
+    Resolve the Team Explorer assemblies from whichever Visual Studio instance is
+    building the project (VS2022 / VS2026 / any edition) instead of a hard-coded
+    "2022\Professional" path. $(VsInstallRoot) is provided by Microsoft.VSSDK.BuildTools;
+    fall back to $(DevEnvDir) (set when building from a Developer Command Prompt / IDE).
+  -->
+  <PropertyGroup>
+    <TeamExplorerDir Condition="'$(VsInstallRoot)' != ''">$(VsInstallRoot)\Common7\IDE\CommonExtensions\Microsoft\TeamFoundation\Team Explorer\</TeamExplorerDir>
+    <TeamExplorerDir Condition="'$(TeamExplorerDir)' == '' and '$(DevEnvDir)' != ''">$(DevEnvDir)CommonExtensions\Microsoft\TeamFoundation\Team Explorer\</TeamExplorerDir>
+  </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
@@ -49,37 +59,37 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.TeamFoundation.Client">
-      <HintPath>C:\Program Files\Microsoft Visual Studio\2022\Professional\Common7\IDE\CommonExtensions\Microsoft\TeamFoundation\Team Explorer\Microsoft.TeamFoundation.Client.dll</HintPath>
+      <HintPath>$(TeamExplorerDir)Microsoft.TeamFoundation.Client.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.TeamFoundation.Common">
-      <HintPath>C:\Program Files\Microsoft Visual Studio\2022\Professional\Common7\IDE\CommonExtensions\Microsoft\TeamFoundation\Team Explorer\Microsoft.TeamFoundation.Common.dll</HintPath>
+      <HintPath>$(TeamExplorerDir)Microsoft.TeamFoundation.Common.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.TeamFoundation.Controls">
-      <HintPath>C:\Program Files\Microsoft Visual Studio\2022\Professional\Common7\IDE\CommonExtensions\Microsoft\TeamFoundation\Team Explorer\Microsoft.TeamFoundation.Controls.dll</HintPath>
+      <HintPath>$(TeamExplorerDir)Microsoft.TeamFoundation.Controls.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.TeamFoundation.Git">
-      <HintPath>C:\Program Files\Microsoft Visual Studio\2022\Professional\Common7\IDE\CommonExtensions\Microsoft\TeamFoundation\Team Explorer\Microsoft.TeamFoundation.Git.dll</HintPath>
+      <HintPath>$(TeamExplorerDir)Microsoft.TeamFoundation.Git.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.TeamFoundation.Git.Client">
-      <HintPath>C:\Program Files\Microsoft Visual Studio\2022\Professional\Common7\IDE\CommonExtensions\Microsoft\TeamFoundation\Team Explorer\Microsoft.TeamFoundation.Git.Client.dll</HintPath>
+      <HintPath>$(TeamExplorerDir)Microsoft.TeamFoundation.Git.Client.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.TeamFoundation.Git.Contracts">
-      <HintPath>C:\Program Files\Microsoft Visual Studio\2022\Professional\Common7\IDE\CommonExtensions\Microsoft\TeamFoundation\Team Explorer\Microsoft.TeamFoundation.Git.Contracts.dll</HintPath>
+      <HintPath>$(TeamExplorerDir)Microsoft.TeamFoundation.Git.Contracts.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.TeamFoundation.Git.Controls">
-      <HintPath>C:\Program Files\Microsoft Visual Studio\2022\Professional\Common7\IDE\CommonExtensions\Microsoft\TeamFoundation\Team Explorer\Microsoft.TeamFoundation.Git.Controls.dll</HintPath>
+      <HintPath>$(TeamExplorerDir)Microsoft.TeamFoundation.Git.Controls.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.TeamFoundation.Git.Provider">
-      <HintPath>C:\Program Files\Microsoft Visual Studio\2022\Professional\Common7\IDE\CommonExtensions\Microsoft\TeamFoundation\Team Explorer\Microsoft.TeamFoundation.Git.Provider.dll</HintPath>
+      <HintPath>$(TeamExplorerDir)Microsoft.TeamFoundation.Git.Provider.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualStudio.TeamFoundation">
-      <HintPath>C:\Program Files\Microsoft Visual Studio\2022\Professional\Common7\IDE\CommonExtensions\Microsoft\TeamFoundation\Team Explorer\Microsoft.VisualStudio.TeamFoundation.dll</HintPath>
+      <HintPath>$(TeamExplorerDir)Microsoft.VisualStudio.TeamFoundation.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualStudio.TeamFoundation.InitializationPackage">
-      <HintPath>C:\Program Files\Microsoft Visual Studio\2022\Professional\Common7\IDE\CommonExtensions\Microsoft\TeamFoundation\Team Explorer\Microsoft.VisualStudio.TeamFoundation.InitializationPackage.dll</HintPath>
+      <HintPath>$(TeamExplorerDir)Microsoft.VisualStudio.TeamFoundation.InitializationPackage.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualStudio.TeamFoundation.VersionControl">
-      <HintPath>C:\Program Files\Microsoft Visual Studio\2022\Professional\Common7\IDE\CommonExtensions\Microsoft\TeamFoundation\Team Explorer\Microsoft.VisualStudio.TeamFoundation.VersionControl.dll</HintPath>
+      <HintPath>$(TeamExplorerDir)Microsoft.VisualStudio.TeamFoundation.VersionControl.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -203,21 +213,21 @@
       <Version>0.26.2</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.SDK">
-      <Version>17.1.32210.191</Version>
+      <Version>17.14.40265</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Shell.Framework">
-      <Version>17.1.32210.191</Version>
+      <Version>17.14.40265</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.VSSDK.BuildTools">
-      <Version>17.1.4057</Version>
+      <Version>17.14.2142</Version>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf">
-      <Version>1.1.39</Version>
+      <Version>1.1.142</Version>
     </PackageReference>
     <PackageReference Include="Newtonsoft.Json">
-      <Version>13.0.1</Version>
+      <Version>13.0.3</Version>
     </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

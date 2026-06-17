@@ -2,7 +2,7 @@
 
 You can log any of your favorite GitLab servers and start your great job!
 
-The GitLab Extension for Visual Studio provides GitLab integration in Visual Studio 2015/2017.
+The GitLab Extension for Visual Studio provides GitLab integration in Visual Studio 2022 and Visual Studio 2026.
 Most of the extension UI lives in the Team Explorer pane, which is available from the View menu.
 
 Appveyor:[![Build status](https://ci.appveyor.com/api/projects/status/qb510idi1wca2vet/branch/master?svg=true)](https://ci.appveyor.com/project/MaiKeBing/gitlab-visualstudio/branch/master)
@@ -52,6 +52,13 @@ If you create a personal access token (https://yourgitlaburl.com/profile/persona
 
 
 ## What's new ?
+
+**V1.3.0**
+* Visual Studio 2026 (18.x) support — the extension now installs and runs on Visual Studio 2022 and 2026.
+* Updated the VSIX manifest install targets to `[17.0,19.0)` and switched architectures to amd64 + arm64 (dropped the unsupported x86 target).
+* Upgraded the Visual Studio SDK / VSSDK Build Tools to 17.14, and refreshed Newtonsoft.Json, Microsoft.Xaml.Behaviors.Wpf and EmbedIO.
+* Team Explorer assemblies are now resolved from the building Visual Studio instance instead of a hard-coded VS2022 path, so the project builds against any installed edition.
+* Fixed the Newtonsoft.Json binding redirect that incorrectly pointed to 12.0.0.0.
 
 **V1.0.189** 
 * Fix Groups and Subgroups missing in Namespace [#53](https://github.com/maikebing/GitLab.VisualStudio/issues/53)
