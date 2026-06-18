@@ -102,6 +102,8 @@
     <Compile Include="IShellService.cs" />
     <Compile Include="IWebService.cs" />
     <Compile Include="Models\AppSettings.cs" />
+    <Compile Include="Models\GitLabWorkItem.cs" />
+    <Compile Include="Models\GitLabWorkItemQuery.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\CreateSnippetResult.cs" />
     <Compile Include="Models\NamespacesPath.cs" />
@@ -181,6 +183,8 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.VisualStudio.SDK">
       <Version>17.14.40265</Version>
+      <ExcludeAssets>runtime</ExcludeAssets>
+      <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.VSSDK.BuildTools">
       <Version>17.14.2142</Version>
