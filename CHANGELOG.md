@@ -12,6 +12,10 @@ download in the
 These are the changes to each version that has been released
 on the official Visual Studio extension gallery.
 
+## V1.3.1
+
+- Fixed VSIX install failure on Visual Studio 2026 (`InstallByMsiException`): the manifest no longer sets `InstalledByMsi="true"`, so the extension can be installed directly through the Extensions installer / Manage Extensions instead of requiring an MSI.
+
 ## V1.3.0
 
 - Visual Studio 2026 (18.x) support; installs on Visual Studio 2022 and 2026.
